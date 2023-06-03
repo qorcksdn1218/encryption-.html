@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>string encryption </title>
+  <meta charset="utf-8">
+  <script>
+    function encryptAndAddRandomNumbers() {
+      var input = document.getElementById("inputText").value.toLowerCase();
+      var encrypted = "";
+
+      for (var i = 0; i < input.length; i++) {
+        var charCode = input.charCodeAt(i);
+
+        // 입력된 문자열이 알파벳 대문자인 경우 소문자로 변환합니다.
+        if (charCode >= 65 && charCode <= 90) {
+          charCode += 32;
+        }
+
+        // 입력된 문자열이 알파벳 소문자인지 확인합니다.
+        if (charCode < 97 || charCode > 122) {
+          continue; // 알파벳 소문자가 아닌 경우 건너뜁니다.
+        }
+
+        var randomNumber = Math.floor(Math.random() * 10) + 1; // 1부터 10까지의 임의의 수
+
+        var encryptedCharCode = charCode + randomNumber;
+
+        // 암호화된 문자의 범위를 확인하고 처리합니다.
+        if (encryptedCharCode > 122) {
+          encryptedCharCode -= 26; // 범위를 초과한 경우 알파벳 범위로 되돌립니다.
+        }
+
+        var decrypted = String.fromCharCode(encryptedCharCode) + randomNumber + " ";
+
+        encrypted += decrypted;
+      }
+
+      // 암호화된 결과가 없는 경우 처리합니다.
+      if (encrypted.length === 0) {
+        encrypted = "올바른 영어만 써주세요. ";
+      }
+
+      document.getElementById("result").innerHTML = encrypted;
+    }
+  </script>
+</head>
+<body>
+  <h1>문자 암호화</h1>
+  <input type="text" id="inputText" placeholder="문자 암호화(영어만)"><br>
+  <button onclick="encryptAndAddRandomNumbers()">encryption </button><br>
+  <div id="result"></div>
+</body>
+</html>
